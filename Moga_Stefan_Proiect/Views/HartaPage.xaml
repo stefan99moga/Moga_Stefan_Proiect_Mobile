@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Moga_Stefan_Proiect.Views.HartaPage"
+             xmlns:vm="clr-namespace:Moga_Stefan_Proiect.ViewModels"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:HartaViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh"
+                     Command="{Binding refreshCommand}"/>
+    </ContentPage.ToolbarItems>
+
+
+    <maps:Map x:Name="harta"
+              IsShowingUser="True"
+              TrafficEnabled="True">
+
+    </maps:Map>
+                        
+</ContentPage>

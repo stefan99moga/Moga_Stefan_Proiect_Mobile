@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Moga_Stefan_Proiect.Views.ComenziPage"
+             xmlns:vm="clr-namespace:Moga_Stefan_Proiect.ViewModels"
+             x:Name="OrderPage"
+             Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <vm:ComenziViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"
+                     Command="{Binding AddCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ListView x:Name="listOrders"
+              ItemSelected="listOrders_ItemSelected"
+              ItemTapped="ListView_ItemTapped"
+              CachingStrategy="RecycleElement"
+              BackgroundColor="{AppThemeBinding Dark=#3d3838, Light=White}"
+              ItemsSource="{Binding Order}"
+              HasUnevenRows="True"
+              RowHeight="10"
+              SeparatorVisibility="None"
+              IsPullToRefreshEnabled="True"
+              RefreshCommand="{Binding refreshCmmd}"
+              IsRefreshing="{Binding IsRefreshing}"
+              RefreshControlColor="Red">
+
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Padding="20"> 
+                        <SwipeView> 
+                            <SwipeView.LeftItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem Text="Modifica" 
+                                               BackgroundColor="#008CBA"
+                                               Command="{Binding Source={x:Reference OrderPage},Path=BindingContext.EditCommand}"
+                                               CommandParameter="{Binding .}"/>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem Text="Sterge" 
+                                               BackgroundColor="red" 
+                                               Command="{Binding Source={x:Reference OrderPage},Path=BindingContext.RemoveCommand}"
+                                               CommandParameter="{Binding .}"
+                                               IsDestructive="True"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame BackgroundColor="{AppThemeBinding Dark=#B31B1B, Light=#f8dada}"
+                                   HasShadow="True">
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="20">
+                                    <Label VerticalOptions="Center"
+                                           FontSize="Large"
+                                           TextColor="{AppThemeBinding Dark=White, Light=Black}"
+                                           Text="{Binding OrderNumber}"/>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label VerticalOptions="Center"
+                                               FontSize="Medium"
+                                               TextColor="{AppThemeBinding Dark=White, Light=Black}"
+                                               Text="{Binding Adress}"/>
+                                        <Label VerticalOptions="Center"
+                                            FontSize="Medium"
+                                               TextColor="{AppThemeBinding Dark=White, Light=Black}"
+                                               Text="{Binding PaymentMethod}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </SwipeView>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+    </ListView>
+</ContentPage>

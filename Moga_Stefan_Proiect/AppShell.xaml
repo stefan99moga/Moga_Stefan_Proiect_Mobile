@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Moga_Stefan_Proiect.Views"
+       Title="Moga_Stefan_Proiect"
+       x:Class="Moga_Stefan_Proiect.AppShell">
+
+    <!--
+        The overall app visual hierarchy is defined here, along with navigation.
+    
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
+    -->
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Dark=#B31B1B, Light=#f8dada}" />
+                <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Dark=#E0A3A3, Light=#f8dada}" />
+                <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Dark=White, Light=Black}" />
+                <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Dark=White, Light=Black}" />
+                <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Dark=White, Light=Black}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Dark=#B31B1B, Light=#f8dada}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Dark=#E0A3A3, Light=red}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <TabBar>
+        <ShellContent Title="Comenzi" Icon="iconcomenzi.png" Route="ComenziPage" ContentTemplate="{DataTemplate local:ComenziPage}" />
+        <ShellContent Title="Harta" Icon="iconharta.png" Route="HartaPage" ContentTemplate="{DataTemplate local:HartaPage}" />
+        <ShellContent Title="Mai multe" Icon="iconmaimulte.png" Route="MaimultePage" ContentTemplate="{DataTemplate local:MaimultePage}" />
+    </TabBar>
+
+
+</Shell>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Moga_Stefan_Proiect.Views.MaimultePage"
+             xmlns:vm="clr-namespace:Moga_Stefan_Proiect.ViewModels"
+             Title="{Binding Title}">
+    
+     <ContentPage.BindingContext>
+         <vm:MaimulteViewModel />
+    </ContentPage.BindingContext>
+    
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to MAI MULTE"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                   TextColor="Cyan"
+                   FontSize="Header"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
