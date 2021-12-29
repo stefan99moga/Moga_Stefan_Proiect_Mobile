@@ -107,6 +107,14 @@ namespace Moga_Stefan_Proiect.ViewModels
             if (order.PaymentMethod == "Renunta")
                 return;
 
+            //converteste adresa in coordonate
+            Geocoder geoCoder = new Geocoder();
+            IEnumerable<Position> approximateLocations =
+                        await geoCoder.GetPositionsForAddressAsync(order.Adress);
+            Position position = approximateLocations.FirstOrDefault();
+            order.CoordonateLat = Convert.ToDouble($"{ position.Latitude}");
+            order.CoordonateLogi = Convert.ToDouble($"{ position.Longitude}");
+
             await OrderService.EditOrder(order);
             await Refresh();
         }

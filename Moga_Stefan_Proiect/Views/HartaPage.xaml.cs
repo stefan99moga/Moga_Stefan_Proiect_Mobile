@@ -4,7 +4,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 using Moga_Stefan_Proiect.Services;
-using Moga_Stefan_Proiect.Models;
 
 namespace Moga_Stefan_Proiect.Views
 {
@@ -30,15 +29,15 @@ namespace Moga_Stefan_Proiect.Views
         }
         public async void GetOrderPinLocations()
         {
-            var position = await OrderService.GetOrder();
-
-            if(position != null)
+            var order = await OrderService.GetOrder();
+            
+            if(order != null)
             {
-                foreach(var item in position)
+                foreach(var item in order)
                 {
                     Pin OrderPins = new Pin()
                     {
-                        Label = item.OrderNumber.ToString(),
+                        Label = item.OrderNumber.ToString() + " - " + item.PaymentMethod.ToString(),
                         Position = new Position(item.CoordonateLat, item.CoordonateLogi)
                     };
                     harta.Pins.Add(OrderPins);
