@@ -13,10 +13,12 @@
 
   <ItemGroup>
     <Compile Remove="Models\ItemState.cs" />
+    <Compile Remove="Models\OrderLocations.cs" />
     <Compile Remove="Models\RefreshCommand.cs" />
     <Compile Remove="Services\IDataStore.cs" />
     <Compile Remove="Services\IOrderService.cs" />
     <Compile Remove="Services\MockDataStore.cs" />
+    <Compile Remove="Services\OrderLocationsService.cs" />
     <Compile Remove="Views\editOrderPage.xaml.cs" />
   </ItemGroup>
 

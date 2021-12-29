@@ -2,7 +2,6 @@
 
 namespace Moga_Stefan_Proiect.Models
 {
-    [Table("Order")]
     public class Order
     {
         [PrimaryKey, AutoIncrement]
@@ -10,5 +9,7 @@ namespace Moga_Stefan_Proiect.Models
         public int OrderNumber { get; set; }
         public string Adress { get; set; }
         public string PaymentMethod { get; set; }
+        public double CoordonateLat { get; set; }
+        public double CoordonateLogi { get; set; }
     }
 }

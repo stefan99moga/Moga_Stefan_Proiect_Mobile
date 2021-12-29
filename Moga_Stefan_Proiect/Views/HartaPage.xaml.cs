@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 using Moga_Stefan_Proiect.Services;
+using Moga_Stefan_Proiect.Models;
 
 namespace Moga_Stefan_Proiect.Views
 {
@@ -15,7 +16,6 @@ namespace Moga_Stefan_Proiect.Views
             InitializeComponent();
             GetCurrentLocation();
             GetOrderPinLocations();
-            //_ = OrderLocationsService.RefreshTable();
         }
         public async void GetCurrentLocation()
         {
@@ -30,7 +30,7 @@ namespace Moga_Stefan_Proiect.Views
         }
         public async void GetOrderPinLocations()
         {
-            var position = await OrderLocationsService.GetOrderLocationsFromTable();
+            var position = await OrderService.GetOrder();
 
             if(position != null)
             {
@@ -39,11 +39,16 @@ namespace Moga_Stefan_Proiect.Views
                     Pin OrderPins = new Pin()
                     {
                         Label = item.OrderNumber.ToString(),
-                        Position = new Position(item.Latitude, item.Longitude)
+                        Position = new Position(item.CoordonateLat, item.CoordonateLogi)
                     };
                     harta.Pins.Add(OrderPins);
                 }
             }
+        }
+        private void ToolbarRefresh_Clicked(object sender, EventArgs e)
+        {
+            harta.Pins.Clear();
+            GetOrderPinLocations();
         }
     }
 }

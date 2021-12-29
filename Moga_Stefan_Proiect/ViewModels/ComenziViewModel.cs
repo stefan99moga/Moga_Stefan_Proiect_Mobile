@@ -1,10 +1,13 @@
 ﻿using Moga_Stefan_Proiect.Models;
 using Moga_Stefan_Proiect.Services;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace Moga_Stefan_Proiect.ViewModels
 {
@@ -15,7 +18,7 @@ namespace Moga_Stefan_Proiect.ViewModels
         public AsyncCommand AddCommand { get; }
         public AsyncCommand<Order> RemoveCommand { get; }
         public AsyncCommand<Order> EditCommand { get; }
-        public ICommand refreshCmmd
+        public ICommand RefreshCmmd
         {
             get
             {
@@ -41,9 +44,11 @@ namespace Moga_Stefan_Proiect.ViewModels
             RemoveCommand = new AsyncCommand<Order>(Remove);
             EditCommand = new AsyncCommand<Order>(Edit);
         }
-        async Task Add()
+        private async Task Add()
         {
-            var orderNumber = await App.Current.MainPage.DisplayPromptAsync("NUMAR COMANDA", "Introduceti numarul comenzii aflat pe bon", maxLength: 3, keyboard: Keyboard.Numeric);
+           
+
+            var orderNumber = await App.Current.MainPage.DisplayPromptAsync("NUMAR COMANDA", "Introduceti numarul comenzii aflat pe bon", "Urmator", "Renunta", maxLength: 3, keyboard: Keyboard.Numeric);
             if (orderNumber == null)
                 return;
 
@@ -55,10 +60,20 @@ namespace Moga_Stefan_Proiect.ViewModels
             if (paymentMethod == "Renunta")
                 return;
 
-            await OrderService.AddOrder(Convert.ToInt16(orderNumber), adress, paymentMethod);
+            //converteste adresa in coordonate
+            Geocoder geoCoder = new Geocoder();
+            IEnumerable<Position> approximateLocations =
+                        await geoCoder.GetPositionsForAddressAsync(adress);
+            Position position = approximateLocations.FirstOrDefault();
+            var coordonatesLat = Convert.ToDouble($"{ position.Latitude}");
+            var coordonatesLong = Convert.ToDouble($"{ position.Longitude}");
+
+            //adauga date in tabela
+            await OrderService.AddOrder(Convert.ToInt16(orderNumber), adress, paymentMethod, coordonatesLat, coordonatesLong);
             await Refresh();
         }
-        async Task Remove(Order order)
+
+        private async Task Remove(Order order)
         {
             bool result = await App.Current.MainPage.DisplayAlert("Sigur doriti sa stergeti comanda?", null, "DA", "NU");
             if(result == true)
@@ -72,19 +87,19 @@ namespace Moga_Stefan_Proiect.ViewModels
                 return;
             }
         }
-        async Task Refresh()
+        private async Task Refresh()
         {
             Order.Clear();
             var orders = await OrderService.GetOrder();
             Order.AddRange(orders);
         }
-        async Task Edit(Order order)
+        private async Task Edit(Order order)
         {
-            order.OrderNumber = Convert.ToInt16(await App.Current.MainPage.DisplayPromptAsync("NUMAR COMANDA", "Introduceti numarul comenzii aflat pe bon", maxLength: 3, keyboard: Keyboard.Numeric, initialValue: order.OrderNumber.ToString()));
+            order.OrderNumber = Convert.ToInt16(await App.Current.MainPage.DisplayPromptAsync("NUMAR COMANDA", "Introduceti numarul comenzii aflat pe bon", "Urmator", "Renunta", maxLength: 3, keyboard: Keyboard.Numeric, initialValue: order.OrderNumber.ToString()));
             if (order.OrderNumber == 0)
                 return;
 
-            order.Adress = await App.Current.MainPage.DisplayPromptAsync("ADRESA COMANDA", null, initialValue: order.Adress);
+            order.Adress = await App.Current.MainPage.DisplayPromptAsync("ADRESA COMANDA", "oras strada numar", "Urmator", "Renunta", initialValue: order.Adress);
             if (order.Adress == null)
                 return;
 

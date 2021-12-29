@@ -22,7 +22,7 @@ namespace Moga_Stefan_Proiect.Services
 
             await db.CreateTableAsync<Order>();
         }
-        public static async Task AddOrder(int orderNumber, string adress, string paymentMethod)
+        public static async Task AddOrder(int orderNumber, string adress, string paymentMethod, double coordonatesLat, double coordonatesLogi)
         {
             await Init();
 
@@ -30,7 +30,9 @@ namespace Moga_Stefan_Proiect.Services
             {
                 OrderNumber = orderNumber,
                 Adress = adress,
-                PaymentMethod = paymentMethod
+                PaymentMethod = paymentMethod,
+                CoordonateLat = coordonatesLat,
+                CoordonateLogi = coordonatesLogi
             };
 
             await db.InsertAsync(order);
@@ -51,7 +53,7 @@ namespace Moga_Stefan_Proiect.Services
         }
         public static Task<int> SaveOrderAsync(Order order)
         {
-            _ = Init();
+            _ = Init(); // e necesar??
             if (order.ID != 0)
             {
                 return db.UpdateAsync(order);

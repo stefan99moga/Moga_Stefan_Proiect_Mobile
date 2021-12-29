@@ -1,11 +1,4 @@
-﻿using Moga_Stefan_Proiect.Models;
-//using Moga_Stefan_Proiect.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using Xamarin.Forms;
+﻿using System.ComponentModel;
 
 namespace Moga_Stefan_Proiect.ViewModels
 {

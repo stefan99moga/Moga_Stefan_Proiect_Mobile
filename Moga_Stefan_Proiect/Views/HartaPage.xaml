@@ -12,7 +12,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Refresh"
-                     Command="{Binding refreshCommand}"/>
+                     Clicked="ToolbarRefresh_Clicked"/>
     </ContentPage.ToolbarItems>
 
 
